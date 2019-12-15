@@ -1,4 +1,4 @@
-package net.darkhax.recycler;
+package net.darkhax.splashy;
 
 import java.util.Arrays;
 import java.util.List;
