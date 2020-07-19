@@ -11,12 +11,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.config.ModConfig.Type;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
 @Mod(Splashy.MOD_ID)
 public class Splashy {
@@ -27,11 +27,11 @@ public class Splashy {
     
     public Splashy() {
         
-        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-            
+    	if (FMLEnvironment.dist == Dist.CLIENT) {
+    		
             ModLoadingContext.get().registerConfig(Type.CLIENT, this.config.getSpec());
             MinecraftForge.EVENT_BUS.addListener(this::onGuiInit);
-        });
+    	}
     }
     
     @OnlyIn(Dist.CLIENT)
