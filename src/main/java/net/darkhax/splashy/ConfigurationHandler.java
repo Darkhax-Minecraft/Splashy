@@ -32,7 +32,7 @@ public class ConfigurationHandler {
         this.includeVanillaSplashes = builder.define("includeVanillaSplashes", true);
         
         builder.comment("A list of additional splash texts that can be displayed.");
-        this.customSplashes = builder.defineList("customSplashes", Arrays.asList("Powered by Squirrels", "Take it Easy!", "scala.actors.threadpool.Arrays", "Potato Knishes", "Not Backported to 1.7.10", "Runs On Clay", "It's Balanced Because it Takes Effort!", "72 Facts About Snails", "Blame Jared"), s -> true);
+        this.customSplashes = builder.defineList("customSplashes", Arrays.asList("Powered by Squirrels", "Take it Easy!", "scala.actors.threadpool.Arrays", "Potato Knishes", "Not Backported to 1.7.10", "Runs On Clay", "It's Balanced Because it Takes Effort!", "72 Facts About Snails", "Blame Jared", "#BLM", "#ModdingTipOfTheDay"), s -> true);
         
         this.spec = builder.build();
     }
