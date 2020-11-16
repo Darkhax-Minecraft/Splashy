@@ -1,5 +1,7 @@
 package net.darkhax.splashy;
 
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -45,7 +47,15 @@ public class Splashy {
             
             // Generate a random splash. If no splashes are found it will go to a default
             // fallback splash.
-            final String randomSplash = !splashPool.isEmpty() ? splashPool.get(this.rand.nextInt(splashPool.size())) : "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+            String randomSplash = !splashPool.isEmpty() ? splashPool.get(this.rand.nextInt(splashPool.size())) : "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+            
+            // Special Days
+            final LocalDateTime now = LocalDateTime.now();
+            
+            if (now.getMonth() == Month.JUNE && now.getDayOfMonth() == 29) {
+            	
+            	randomSplash = "Happy Birthday Jared <3";
+            }
             
             // Set the splash text. Using reflection for this because ATs are still a bit
             // sketchy and performance cost here is negligible.
