@@ -1,7 +1,6 @@
 package net.darkhax.splashy.mixin;
 
 import net.darkhax.splashy.Config;
-import net.darkhax.splashy.Constants;
 import net.darkhax.splashy.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.SplashManager;
@@ -19,7 +18,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mixin(value = SplashManager.class)
 public class MixinSplashManager {
