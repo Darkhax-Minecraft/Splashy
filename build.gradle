@@ -51,7 +51,6 @@ subprojects {
 
     repositories {
 
-        mavenLocal()
         mavenCentral()
 
         maven {
@@ -70,8 +69,18 @@ subprojects {
         }
 
         maven {
-            name = 'JitPack'
-            url = 'https://jitpack.io'
+            name = 'Progwm16 / JEI'
+            url = 'https://dvs1.progwml6.com/files/maven'
+        }
+
+        maven {
+            name = 'Shedaniel / REI'
+            url = 'https://maven.shedaniel.me'
+        }
+
+        maven {
+            name = 'Curse Maven'
+            url = 'https://www.cursemaven.com'
         }
     }
 }
