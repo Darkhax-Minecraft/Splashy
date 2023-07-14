@@ -3,6 +3,7 @@ package net.darkhax.splashy.mixin;
 import net.darkhax.splashy.Config;
 import net.darkhax.splashy.platform.Services;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.SplashRenderer;
 import net.minecraft.client.resources.SplashManager;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -10,6 +11,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -21,6 +23,9 @@ import java.util.List;
 
 @Mixin(value = SplashManager.class)
 public class MixinSplashManager {
+
+    @Unique
+    private static final SplashRenderer JARED_BIRTHDAY = new SplashRenderer("Happy Birthday Jared <3");
 
     @Final
     @Shadow
@@ -60,15 +65,15 @@ public class MixinSplashManager {
         }
     }
 
-    @Inject(method = "getSplash()Ljava/lang/String;", at = @At("RETURN"), cancellable = true)
-    private void getSplash(CallbackInfoReturnable<String> cir) {
+    @Inject(method = "getSplash()Lnet/minecraft/client/gui/components/SplashRenderer;", at = @At("RETURN"), cancellable = true)
+    private void getSplash(CallbackInfoReturnable<SplashRenderer> cir) {
 
         // Special Days
         final LocalDateTime now = LocalDateTime.now();
 
         if (now.getMonth() == Month.JUNE && now.getDayOfMonth() == 29) {
 
-            cir.setReturnValue("Happy Birthday Jared <3");
+            cir.setReturnValue(JARED_BIRTHDAY);
         }
     }
 }
