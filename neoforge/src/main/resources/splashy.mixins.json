@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.darkhax.splashy.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "MixinSplashManager"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "splashy.refmap.json"
+}
