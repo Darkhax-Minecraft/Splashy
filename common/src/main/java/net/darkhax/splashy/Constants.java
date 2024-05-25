@@ -12,4 +12,5 @@ public class Constants {
     public static final String MOD_NAME = "Splashy";
     public static final Logger LOG = LogManager.getLogger(MOD_NAME);
     public static final Random RAND = new SecureRandom();
+    public static final Config CONFIG = Config.load();
 }
