@@ -34,6 +34,8 @@ public class Config {
             "splash.splashy.multiloader"
     );
 
+    @Expose
+    public boolean displaySplashes = true;
 
     public static Config load() {
 

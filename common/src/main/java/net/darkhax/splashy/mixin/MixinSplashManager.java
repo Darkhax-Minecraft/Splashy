@@ -1,6 +1,7 @@
 package net.darkhax.splashy.mixin;
 
-import net.darkhax.splashy.Config;
+import net.darkhax.splashy.Constants;
+import net.darkhax.splashy.gui.components.EmptySplashRenderer;
 import net.darkhax.splashy.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.SplashRenderer;
@@ -34,46 +35,54 @@ public class MixinSplashManager {
     @Inject(method = "apply(Ljava/util/List;Lnet/minecraft/server/packs/resources/ResourceManager;Lnet/minecraft/util/profiling/ProfilerFiller;)V", at = @At("RETURN"))
     private void apply(List<String> vanillaValues, ResourceManager resources, ProfilerFiller profiler, CallbackInfo ci) {
 
-        final Config config = Config.load();
+        if (Constants.CONFIG.displaySplashes) {
 
-        // Config option to remove vanilla entries.
-        if (!config.includeVanillaSplashes) {
+            // Config option to remove vanilla entries.
+            if (!Constants.CONFIG.includeVanillaSplashes) {
 
-            splashes.removeAll(vanillaValues);
-        }
-
-        // Include the names of installed mods.
-        if (config.includeModNames) {
-
-            splashes.addAll(Services.HELPER.getLoadedMods().stream().filter(s -> !s.contains("Fabric") && !s.contains("API")).toList());
-        }
-
-        // Variables for custom splashes.
-        final String username = Minecraft.getInstance().getUser().getName();
-        final String version = Minecraft.getInstance().getLaunchedVersion();
-
-        // Load custom splashes from config file.
-        for (String customSplash : config.customSplashes) {
-
-            // Attempt to localize the tip.
-            if (I18n.exists(customSplash)) {
-
-                customSplash = I18n.get(customSplash, username, version);
+                splashes.removeAll(vanillaValues);
             }
 
-            splashes.add(customSplash);
+            // Include the names of installed mods.
+            if (Constants.CONFIG.includeModNames) {
+
+                splashes.addAll(Services.HELPER.getLoadedMods().stream().filter(s -> !s.contains("Fabric") && !s.contains("API")).toList());
+            }
+
+            // Variables for custom splashes.
+            final String username = Minecraft.getInstance().getUser().getName();
+            final String version = Minecraft.getInstance().getLaunchedVersion();
+
+            // Load custom splashes from config file.
+            for (String customSplash : Constants.CONFIG.customSplashes) {
+
+                // Attempt to localize the tip.
+                if (I18n.exists(customSplash)) {
+
+                    customSplash = I18n.get(customSplash, username, version);
+                }
+
+                splashes.add(customSplash);
+            }
         }
     }
 
     @Inject(method = "getSplash()Lnet/minecraft/client/gui/components/SplashRenderer;", at = @At("RETURN"), cancellable = true)
     private void getSplash(CallbackInfoReturnable<SplashRenderer> cir) {
+        if (Constants.CONFIG.displaySplashes) {
 
-        // Special Days
-        final LocalDateTime now = LocalDateTime.now();
+            // Special Days
+            final LocalDateTime now = LocalDateTime.now();
 
-        if (now.getMonth() == Month.JUNE && now.getDayOfMonth() == 29) {
+            if (now.getMonth() == Month.JUNE && now.getDayOfMonth() == 29) {
 
-            cir.setReturnValue(JARED_BIRTHDAY);
+                cir.setReturnValue(JARED_BIRTHDAY);
+            }
+        }
+
+        else {
+
+            cir.setReturnValue(EmptySplashRenderer.EMPTY);
         }
     }
 }
